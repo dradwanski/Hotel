@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hotel.Application.Services;
 using Hotel.Database;
 using Hotel.Database.Entities;
 using Hotel.Database.Seeders;
@@ -40,7 +41,9 @@ namespace Hotel.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel.API", Version = "v1" });
             });
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<HotelSeeder>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
