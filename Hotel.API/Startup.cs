@@ -31,10 +31,7 @@ namespace Hotel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<HotelDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("HotelDatabase"));
-            });
+            
                 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -44,12 +41,13 @@ namespace Hotel.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<HotelSeeder>();
             services.AddScoped<IUserService, UserService>();
+            ConfigureDatabase(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-            ConfigureDatabase(serviceProvider);
+            serviceProvider.DatabaseCheck();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,14 +67,9 @@ namespace Hotel.API
             });
         }
 
-        public void ConfigureDatabase(IServiceProvider serviceProvider)
+        public void ConfigureDatabase(IServiceCollection service)
         {
-            var hotelSeeder = serviceProvider.GetRequiredService<HotelSeeder>();
-            hotelSeeder.Seed<MethodOfPaymentSeeder, MethodOfPayment>();
-            hotelSeeder.Seed<RoomTypeSeeder, RoomType>();
-            hotelSeeder.Seed<RoleSeeder, Role>();
-            var dbContext = serviceProvider.GetRequiredService<HotelDbContext>();
-            dbContext.Database.Migrate();
+            service.AddDatabaseExtensions(Configuration);
         }
     }
 }

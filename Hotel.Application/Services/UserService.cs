@@ -11,7 +11,7 @@ namespace Hotel.Application.Services
     {
         public Task RegisterUser(UserDto dto)
         {
-            
+            return Task.CompletedTask;
         }
     }
 }
