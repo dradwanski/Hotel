@@ -14,6 +14,7 @@ namespace Hotel.API
         public ApiMapper()
         {
             CreateMap<RegisterUser, UserDto>();
+            CreateMap<LoginUser, UserDto>();
         }
     }
 }

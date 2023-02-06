@@ -10,12 +10,16 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Hotel.Application.Services;
 using Hotel.Database;
 using Hotel.Database.Entities;
+using Hotel.Database.Extensions;
 using Hotel.Database.Seeders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hotel.API
 {
@@ -31,8 +35,7 @@ namespace Hotel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-                
+            ConfigureJwt(services);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -42,6 +45,7 @@ namespace Hotel.API
             services.AddScoped<HotelSeeder>();
             services.AddScoped<IUserService, UserService>();
             ConfigureDatabase(services);
+            services.AddScoped<ApiMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,10 @@ namespace Hotel.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel.API v1"));
             }
+
+            app.UseMiddleware<ApiMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
@@ -70,6 +78,10 @@ namespace Hotel.API
         public void ConfigureDatabase(IServiceCollection service)
         {
             service.AddDatabaseExtensions(Configuration);
+        }
+        public void ConfigureJwt(IServiceCollection service)
+        {
+            service.AddJwtExtensions(Configuration);
         }
     }
 }

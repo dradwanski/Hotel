@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Hotel.Application.Repository;
 using Hotel.Database.Repository;
+using Hotel.Database.Repository.UserAuthentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
 
-namespace Hotel.Database
+namespace Hotel.Database.Extensions
 {
     public static class DatabaseExtensions
     {
@@ -24,6 +26,9 @@ namespace Hotel.Database
             });
 
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserPasswordHasher, UserPasswordHasher>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             return services;
         }

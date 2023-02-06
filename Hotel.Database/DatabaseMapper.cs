@@ -14,6 +14,7 @@ namespace Hotel.Database
         public DatabaseMapper()
         {
             CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
         }
     }
 }
