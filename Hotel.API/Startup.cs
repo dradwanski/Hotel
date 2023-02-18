@@ -44,6 +44,10 @@ namespace Hotel.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<HotelSeeder>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoomTypeService, RoomTypeService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IMethodOfPaymentService, MethodOfPaymentService>();
             ConfigureDatabase(services);
             services.AddScoped<ApiMiddleware>();
         }

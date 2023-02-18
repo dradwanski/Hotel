@@ -12,6 +12,7 @@ using Hotel.Application.Repository;
 using Hotel.Database.Entities;
 using Hotel.Database.Repository.Helper;
 using Hotel.Database.Repository.UserAuthentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -48,7 +49,11 @@ namespace Hotel.Database.Repository
 
         public Task<bool> IsEmailExist(UserDto dto)
         {
-            return _dbContext.Users.AnyAsync(x => x.Email.ToUpper() == dto.Email.ToUpper());
+            return _dbContext.Set<User>().AnyAsync(x => x.Email.ToUpper() == dto.Email.ToUpper());
+        }
+        public Task<bool> IsUserExist(int userId)
+        {
+            return _dbContext.Set<User>().AnyAsync(x => x.UserId == userId);
         }
 
         public async Task<bool> VerifyPassword(UserDto dto)
@@ -59,7 +64,7 @@ namespace Hotel.Database.Repository
 
         public async Task<Token> LoginUserAsync(UserDto dto)
         {
-            var user = await _dbContext.Users
+            var user = await _dbContext.Set<User>()
                 .Include(r => r.Role)
                 .FirstOrDefaultAsync(x => x.Email == dto.Email);
 
@@ -89,6 +94,21 @@ namespace Hotel.Database.Repository
                 AccessToken = tokenHandler.WriteToken(token),
                 ExpireDate = datePattern
             };
+        }
+
+        public async Task<List<UserDto>> GetUsers()
+        {
+            var users = await _dbContext.Set<User>().Include(x => x.Role).ToListAsync();
+            var result = _mapper.Map<List<UserDto>>(users);
+            return result;
+        }
+
+        public async Task SetRole(int userId, string roleName)
+        {
+            var user = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.UserId == userId);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.RoleName == roleName);
+            user.Role = role;
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

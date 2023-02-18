@@ -21,5 +21,15 @@ namespace Hotel.Database
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<User> Users { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RoomType>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Room>()
+                .HasIndex(p => p.Number)
+                .IsUnique(true);
+        }
     }
 }

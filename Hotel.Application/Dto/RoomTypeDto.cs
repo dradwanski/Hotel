@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotel.Database.Entities
+namespace Hotel.Application.Dto
 {
-    public class RoomType
+    public class RoomTypeDto
     {
-        public int RoomTypeId { get; set; }
+        public int Id { get; set; }
         public string Type { get; set; }
         public string Standard { get; set; }
         public int Price { get; set; }

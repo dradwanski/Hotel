@@ -12,7 +12,10 @@ namespace Hotel.Application.Repository
     {
         Task<bool> RegisterUserAsync(UserDto dto);
         Task<bool> IsEmailExist(UserDto dto);
+        Task<bool> IsUserExist(int userId);
         Task<bool> VerifyPassword(UserDto dto);
         Task<Token> LoginUserAsync(UserDto dto);
+        Task<List<UserDto>> GetUsers();
+        Task SetRole(int userId, string roleName);
     }
 }

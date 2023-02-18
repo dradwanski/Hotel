@@ -47,18 +47,27 @@ namespace Hotel.API.Controllers
         {
             var viewModel = new UserModel();
             viewModel.Name = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
-            viewModel.UserId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            viewModel.UserId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
             viewModel.Role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
             viewModel.Email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
             return Ok(viewModel);
         }
 
-        [Authorize]
-        [HttpGet("test")]
-        public async Task<ActionResult> Test()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("GetUsers")]
+        public async Task<ActionResult> GetUsers()
         {
-            return Ok();
+            var users = await _userServices.GetUsers();
+            var result = _mapper.Map<List<UserModel>>(users);
+            return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("SetRole")]
+        public async Task<ActionResult> SetRole([FromBody] SetRoleModel modelUser)
+        {
+            await _userServices.SetRole(modelUser.UserId, modelUser.RoleName);
+            return Ok();
+        }
     }
 }

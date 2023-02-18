@@ -12,5 +12,7 @@ namespace Hotel.Application.Services
     {
         Task RegisterUser(UserDto dto);
         Task<Token> LoginUser(UserDto dto);
+        Task<List<UserDto>> GetUsers();
+        Task SetRole(int userId, string roleName);
     }
 }

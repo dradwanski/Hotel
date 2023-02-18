@@ -27,6 +27,10 @@ namespace Hotel.Database.Extensions
 
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IMethodOfPaymentRepository, MethodOfPaymentRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IUserPasswordHasher, UserPasswordHasher>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 

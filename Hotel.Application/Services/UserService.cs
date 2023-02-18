@@ -24,7 +24,7 @@ namespace Hotel.Application.Services
         public async Task RegisterUser(UserDto dto)
         {
             dto.Role = await _role.GetDefaultRoleAsync();
-            var successEmailValidate = EmailValidation.IsValidEmail(dto.Email);
+            var successEmailValidate = EmailValidation.IsEmailValid(dto.Email);
             var successPasswordValidate = PasswordValidation.IsValidPassword(dto.Password);
             if (!successEmailValidate)
                 throw new NotEmailValidException(dto.Email);
@@ -33,9 +33,6 @@ namespace Hotel.Application.Services
             if (_user.IsEmailExist(dto).Result)
                 throw new NotValidException($"Email {dto.Email} exist in database");
             await _user.RegisterUserAsync(dto);
-
-            
-            
         }
 
         public async Task<Token> LoginUser(UserDto dto)
@@ -51,6 +48,24 @@ namespace Hotel.Application.Services
             }
 
             return await _user.LoginUserAsync(dto);
+        }
+
+        public Task<List<UserDto>> GetUsers()
+        {
+            return _user.GetUsers();
+        }
+
+        public async Task SetRole(int userId, string roleName)
+        {
+            if (!await _user.IsUserExist(userId))
+            {
+                throw new NotValidException($"User number {userId} does not exist");
+            }
+            if (!await _role.IsRoleExist(roleName))
+            {
+                throw new NotValidException($"The specifed role does not exist");
+            }
+            await _user.SetRole(userId, roleName);
         }
     }
 }

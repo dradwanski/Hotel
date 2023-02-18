@@ -27,5 +27,10 @@ namespace Hotel.Database.Repository
             var dto = _mapper.Map<RoleDto>(defaultRole);
             return dto;
         }
+
+        public Task<bool> IsRoleExist(string roleName)
+        {
+            return _dbContext.Roles.AnyAsync(x => x.RoleName == roleName);
+        }
     }
 }

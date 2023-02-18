@@ -9,7 +9,7 @@ namespace Hotel.Application.Helper
 {
     public static class EmailValidation
     {
-        public static bool IsValidEmail(string email)
+        public static bool IsEmailValid(string email)
         {
             var trimmedEmail = email.Trim();
             if (trimmedEmail.Length == 0)

@@ -15,6 +15,12 @@ namespace Hotel.Database
         {
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<MethodOfPayment, MethodOfPaymentDto>().ReverseMap();
+            CreateMap<Client, ClientDto>().ReverseMap();
+            CreateMap<Room, RoomDto>().ForMember(x => x.RoomTypeId, s => s.MapFrom(z => z.Type.RoomTypeId)).ReverseMap();
+            CreateMap<RoomType, RoomTypeDto>()
+                .ForMember(x => x.Id, t => t.MapFrom(z => z.RoomTypeId))
+                .ReverseMap();
         }
     }
 }
