@@ -7,6 +7,7 @@ using AutoMapper;
 using Hotel.API.RequestModels;
 using Hotel.API.ViewModels;
 using Hotel.Application.Dto;
+using Hotel.Application.Validation;
 
 namespace Hotel.API
 {
@@ -18,6 +19,9 @@ namespace Hotel.API
             CreateMap<LoginUser, UserDto>();
             CreateMap<RoomTypeModel, RoomTypeDto>();
             CreateMap<RoomModel, RoomDto>();
+            CreateMap<ClientModel, ClientDto>()
+                .ForMember(x=>x.DateOfBirth, z=>z.MapFrom(c => DateOnly.Parse(c.DateOfBirth)))
+                .ReverseMap();
             CreateMap<MethodOfPaymentModel, MethodOfPaymentDto>();
             CreateMap<UserDto, UserModel>()
                 .ForMember(x => x.Role, z => z.MapFrom(c => c.Role.RoleName))

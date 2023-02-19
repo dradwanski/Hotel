@@ -31,10 +31,96 @@ namespace Hotel.Database.Repository
             return await _dbContext.Set<Client>().AnyAsync(x => x.PhoneNumber == phoneNumber);
         }
 
+        public async Task<bool> IsClientExist(int id)
+        {
+            return await _dbContext.Set<Client>().AnyAsync(x => x.Id == id);
+        }
+
         public async Task CreateClient(ClientDto clientDto)
         {
             var client =_mapper.Map<Client>(clientDto);
             await _dbContext.AddAsync(client);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<ClientDto>> GetClients(int pageSize, int pageNumber)
+        {
+            var listOfClients = await _dbContext.Set<Client>()
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            var listOfClientsDto = _mapper.Map<List<ClientDto>>(listOfClients);
+            return listOfClientsDto;
+        }
+
+        public async Task<List<ClientDto>> GetClientsByNameAndLastName(string name, string lastName, int pageSize, int pageNumber)
+        {
+            var listOfClients = await _dbContext.Set<Client>()
+                .Where(x => x.Name.StartsWith(name) && x.LastName.StartsWith(lastName))
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            var listOfClientsDto = _mapper.Map<List<ClientDto>>(listOfClients);
+            return listOfClientsDto;
+        }
+
+        public async Task<ClientDto> GetClientByMail(string mail)
+        {
+            var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Email == mail);
+            var clientDto = _mapper.Map<ClientDto>(client);
+            return clientDto;
+        }
+
+        public async Task<ClientDto> GetByClientByPhoneNumber(string phoneNumber)
+        {
+            var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+            var clientDto = _mapper.Map<ClientDto>(client);
+            return clientDto;
+        }
+
+        public async Task<List<ClientDto>> GetClientsByName(string name, int pageSize, int pageNumber)
+        {
+            var listOfClients = await _dbContext.Set<Client>()
+                .Where(x => x.Name.StartsWith(name))
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            var listOfClientsDto = _mapper.Map<List<ClientDto>>(listOfClients);
+            return listOfClientsDto;
+        }
+
+        public async Task<List<ClientDto>> GetClientsByLastName(string lastName, int pageSize, int pageNumber)
+        {
+            var listOfClients = await _dbContext.Set<Client>()
+                .Where(x => x.LastName.StartsWith(lastName))
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            var listOfClientsDto = _mapper.Map<List<ClientDto>>(listOfClients);
+            return listOfClientsDto;
+        }
+
+        public async Task Update(ClientDto dto)
+        {
+            var mappedDto = _mapper.Map<Client>(dto);
+            var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Id == mappedDto.Id);
+            client.Email = mappedDto.Email;
+            client.Name = mappedDto.Name;
+            client.LastName = mappedDto.LastName;
+            client.City = mappedDto.City;
+            client.Country = mappedDto.Country;
+            client.Street = mappedDto.Street;
+            client.PostalCode = mappedDto.PostalCode;
+            client.DateOfBirth = mappedDto.DateOfBirth;
+            client.PhoneNumber = mappedDto.PhoneNumber;
+            await _dbContext.SaveChangesAsync();
+
+        }
+
+        public async Task Delete(int id)
+        {
+            var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Id == id);
+            _dbContext.Remove(client);
             await _dbContext.SaveChangesAsync();
         }
     }

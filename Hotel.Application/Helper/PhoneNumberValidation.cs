@@ -21,7 +21,7 @@ namespace Hotel.Application.Helper
                     count++;
                 }
             }
-            return count == 9 && count == 10;
+            return count == 9 || count == 10;
         }
     }
 }

@@ -20,6 +20,8 @@ using Hotel.Database.Seeders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Hotel.Application.Dto;
+using Hotel.Application.Validation;
 
 namespace Hotel.API
 {
@@ -47,6 +49,7 @@ namespace Hotel.API
             services.AddScoped<IRoomTypeService, RoomTypeService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IValidator<ClientDto>, ClientValidator>();
             services.AddScoped<IMethodOfPaymentService, MethodOfPaymentService>();
             ConfigureDatabase(services);
             services.AddScoped<ApiMiddleware>();

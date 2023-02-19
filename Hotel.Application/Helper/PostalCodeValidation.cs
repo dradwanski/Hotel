@@ -17,12 +17,12 @@ namespace Hotel.Application.Helper
             int count = 0;
             foreach (var item in postalCode)
             {
-                if (item is >= '0' or <= '9')
+                if (item is >= '0' and <= '9')
                 {
                     count++;
                 }
             }
-            return count >= 4 && count + 2 <= postalCode.Length && postalCode.Length<10;
+            return count >= 4 && count + 2 >= postalCode.Length && postalCode.Length < 10;
         }
     }
 }

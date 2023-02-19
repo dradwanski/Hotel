@@ -12,5 +12,9 @@ namespace Hotel.Application.Helper
         {
             return DateTime.Now.AddYears(-18) >= dateOfBirth;
         }
+        public static bool IsAdult(DateOnly dateOfBirth)
+        {
+            return IsAdult(DateTime.Parse(dateOfBirth.ToString()));
+        }
     }
 }
