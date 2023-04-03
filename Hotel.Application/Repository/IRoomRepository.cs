@@ -17,5 +17,6 @@ namespace Hotel.Application.Repository
         Task<bool> IsRoomNumberExist(int roomNumber);
         Task<bool> IsRoomExist(int id);
         Task Update(RoomDto dto);
+        Task<bool> IsRoomReserved(int roomId, DateTime startDate, DateTime endDate);
     }
 }

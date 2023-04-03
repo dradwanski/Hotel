@@ -4,6 +4,7 @@ using Hotel.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Database.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230302180138_StatusOfReservation")]
+    partial class StatusOfReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,10 +122,10 @@ namespace Hotel.Database.Migrations
                     b.Property<DateTime>("ReservationStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReservationStatusStatusId")
+                    b.Property<int?>("ReservationStatusStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("ReservationId");
@@ -287,15 +290,11 @@ namespace Hotel.Database.Migrations
 
                     b.HasOne("Hotel.Database.Entities.Status", "ReservationStatus")
                         .WithMany()
-                        .HasForeignKey("ReservationStatusStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservationStatusStatusId");
 
-                    b.HasOne("Hotel.Database.Entities.Room", "Room")
+                    b.HasOne("Hotel.Database.Entities.Room", null)
                         .WithMany("ListOfReservation")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("Client");
 
@@ -306,8 +305,6 @@ namespace Hotel.Database.Migrations
                     b.Navigation("MethodOfPayment");
 
                     b.Navigation("ReservationStatus");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Hotel.Database.Entities.Room", b =>

@@ -11,5 +11,6 @@ namespace Hotel.Application.Dto
         public int RoomId { get; set; }
         public int Number { get; set; }
         public int RoomTypeId { get; set; }
+        public List<ReservationDto> Reservations { get; set; }
     }
 }

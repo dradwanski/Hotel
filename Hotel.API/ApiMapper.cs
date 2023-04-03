@@ -19,6 +19,10 @@ namespace Hotel.API
             CreateMap<LoginUser, UserDto>();
             CreateMap<RoomTypeModel, RoomTypeDto>();
             CreateMap<RoomModel, RoomDto>();
+            CreateMap<ReservationModel, ReservationDto>()
+                .ForMember(x => x.ReservationStart,
+                    z => z.MapFrom(c => DateTime.Parse(c.ReservationStart).AddHours(12)))
+                .ForMember(x => x.ReservationEnd, z => z.MapFrom(c => DateTime.Parse(c.ReservationEnd).AddHours(10)));
             CreateMap<ClientModel, ClientDto>()
                 .ForMember(x=>x.DateOfBirth, z=>z.MapFrom(c => DateOnly.Parse(c.DateOfBirth)))
                 .ReverseMap();

@@ -20,6 +20,7 @@ namespace Hotel.Database
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Status> Status { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,6 +4,7 @@ using Hotel.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Database.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230220183611_nullableDateOfPayment")]
+    partial class nullableDateOfPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,10 +110,10 @@ namespace Hotel.Database.Migrations
                     b.Property<int>("LastEditedUserUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MethodOfPaymentId")
+                    b.Property<int>("MethodOfPaymentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ModificationDate")
+                    b.Property<DateTime>("ModifikationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ReservationEnd")
@@ -119,10 +122,11 @@ namespace Hotel.Database.Migrations
                     b.Property<DateTime>("ReservationStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReservationStatusStatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReservationStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("ReservationId");
@@ -134,8 +138,6 @@ namespace Hotel.Database.Migrations
                     b.HasIndex("LastEditedUserUserId");
 
                     b.HasIndex("MethodOfPaymentId");
-
-                    b.HasIndex("ReservationStatusStatusId");
 
                     b.HasIndex("RoomId");
 
@@ -212,23 +214,6 @@ namespace Hotel.Database.Migrations
                     b.ToTable("RoomTypes");
                 });
 
-            modelBuilder.Entity("Hotel.Database.Entities.Status", b =>
-                {
-                    b.Property<int>("StatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
-
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StatusId");
-
-                    b.ToTable("Status");
-                });
-
             modelBuilder.Entity("Hotel.Database.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -283,19 +268,13 @@ namespace Hotel.Database.Migrations
 
                     b.HasOne("Hotel.Database.Entities.MethodOfPayment", "MethodOfPayment")
                         .WithMany()
-                        .HasForeignKey("MethodOfPaymentId");
-
-                    b.HasOne("Hotel.Database.Entities.Status", "ReservationStatus")
-                        .WithMany()
-                        .HasForeignKey("ReservationStatusStatusId")
+                        .HasForeignKey("MethodOfPaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hotel.Database.Entities.Room", "Room")
+                    b.HasOne("Hotel.Database.Entities.Room", null)
                         .WithMany("ListOfReservation")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("Client");
 
@@ -304,10 +283,6 @@ namespace Hotel.Database.Migrations
                     b.Navigation("LastEditedUser");
 
                     b.Navigation("MethodOfPayment");
-
-                    b.Navigation("ReservationStatus");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Hotel.Database.Entities.Room", b =>

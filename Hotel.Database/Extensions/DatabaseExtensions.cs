@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Hotel.Application.Repository;
 using Hotel.Database.Repository;
 using Hotel.Database.Repository.UserAuthentication;
+using Hotel.Database.Triggers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,10 @@ namespace Hotel.Database.Extensions
             services.AddDbContext<HotelDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("HotelDatabase"));
+                options.UseTriggers(triggerOptions =>
+                {
+                    triggerOptions.AddTrigger<ReservationTrigger>();
+                });
             });
 
             services.AddScoped<IRoleRepository, RoleRepository>();
@@ -31,6 +36,7 @@ namespace Hotel.Database.Extensions
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IMethodOfPaymentRepository, MethodOfPaymentRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IUserPasswordHasher, UserPasswordHasher>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 

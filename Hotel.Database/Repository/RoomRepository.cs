@@ -85,5 +85,19 @@ namespace Hotel.Database.Repository
 
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> IsRoomReserved(int roomId, DateTime startDate, DateTime endDate)
+        {
+            return await _dbContext
+                .Set<Room>()
+                .Include(x => x.ListOfReservation)
+                .AnyAsync(x => x.RoomId == roomId 
+                               && x.ListOfReservation.Any(z => (z.ReservationStart > startDate && z.ReservationStart < endDate && z.ReservationEnd > startDate && z.ReservationEnd < endDate) 
+                                                               || (z.ReservationStart < startDate && z.ReservationEnd > startDate && z.ReservationEnd < endDate)
+                                                               || (z.ReservationStart > startDate && z.ReservationStart < endDate && z.ReservationEnd > endDate)
+                                                               || (z.ReservationStart < startDate && z.ReservationEnd > endDate)
+                                                               || (z.ReservationStart == startDate)
+                                                               || (z.ReservationEnd == endDate)));
+        }
     }
 }

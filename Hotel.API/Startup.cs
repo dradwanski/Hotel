@@ -49,6 +49,7 @@ namespace Hotel.API
             services.AddScoped<IRoomTypeService, RoomTypeService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IValidator<ClientDto>, ClientValidator>();
             services.AddScoped<IMethodOfPaymentService, MethodOfPaymentService>();
             ConfigureDatabase(services);
