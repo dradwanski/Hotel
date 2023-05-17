@@ -17,27 +17,27 @@ namespace Hotel.Application.Services
         {
             _methodOfPaymentRepository = methodOfPaymentRepository;
         }
-        public async Task<List<MethodOfPaymentDto>> GetMethodOfPayments()
+        public async Task<List<MethodOfPaymentDto>> GetMethodOfPaymentsAsync()
         {
-            return await _methodOfPaymentRepository.GetMethodOfPayments();
+            return await _methodOfPaymentRepository.GetMethodOfPaymentsAsync();
         }
 
-        public async Task CreateMethodOfPayment(MethodOfPaymentDto methodOfPaymentDto)
+        public async Task CreateMethodOfPaymentAsync(MethodOfPaymentDto methodOfPaymentDto)
         {
-            if (await _methodOfPaymentRepository.IsMethodOfPaymentsExistByName(methodOfPaymentDto.MethodOfPaymentName))
+            if (await _methodOfPaymentRepository.IsMethodOfPaymentsExistByNameAsync(methodOfPaymentDto.MethodOfPaymentName))
             {
                 throw new NotValidException("Method of payment is exist");
             }
 
-            await _methodOfPaymentRepository.CreateMethodOfPayment(methodOfPaymentDto);
+            await _methodOfPaymentRepository.CreateMethodOfPaymentAsync(methodOfPaymentDto);
         }
 
-        public async Task DeleteMethodOfPayment(int methodOfPaymentId)
+        public async Task DeleteMethodOfPaymentAsync(int methodOfPaymentId)
         {
 
-            if (await _methodOfPaymentRepository.IsMethodOfPaymentsExistById(methodOfPaymentId))
+            if (await _methodOfPaymentRepository.IsMethodOfPaymentsExistByIdAsync(methodOfPaymentId))
             {
-                await _methodOfPaymentRepository.DeleteMethodOfPayment(methodOfPaymentId);
+                await _methodOfPaymentRepository.DeleteMethodOfPaymentAsync(methodOfPaymentId);
                 return;
             }
 

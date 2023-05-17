@@ -9,8 +9,8 @@ namespace Hotel.Application.Services
 {
     public interface IMethodOfPaymentService
     {
-        Task<List<MethodOfPaymentDto>> GetMethodOfPayments();
-        Task CreateMethodOfPayment(MethodOfPaymentDto methodOfPaymentDto);
-        Task DeleteMethodOfPayment(int methodOfPaymentId);
+        Task<List<MethodOfPaymentDto>> GetMethodOfPaymentsAsync();
+        Task CreateMethodOfPaymentAsync(MethodOfPaymentDto methodOfPaymentDto);
+        Task DeleteMethodOfPaymentAsync(int methodOfPaymentId);
     }
 }

@@ -21,7 +21,7 @@ namespace Hotel.Database.Repository
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<List<RoomTypeDto>> GetRoomTypes()
+        public async Task<List<RoomTypeDto>> GetRoomTypesAsync()
         {
             var roomTypes = await _dbContext.Set<RoomType>().Where(x => x.IsActive == true).ToListAsync();
 
@@ -30,7 +30,7 @@ namespace Hotel.Database.Repository
             return result;
         }
 
-        public async Task<RoomTypeDto> GetRoomTypeById(int id)
+        public async Task<RoomTypeDto> GetRoomTypeByIdAsync(int id)
         {
             var roomType = await _dbContext.Set<RoomType>().FirstOrDefaultAsync(x => x.RoomTypeId == id);
 
@@ -39,7 +39,7 @@ namespace Hotel.Database.Repository
             return result;
         }
 
-        public async Task<int> CreateRoomType(RoomTypeDto dto)
+        public async Task<int> CreateRoomTypeAsync(RoomTypeDto dto)
         {
             var roomType = _mapper.Map<RoomType>(dto);
 
@@ -50,12 +50,12 @@ namespace Hotel.Database.Repository
             return roomType.RoomTypeId;
         }
 
-        public async Task<bool> IsRoomTypeExist(int id)
+        public async Task<bool> IsRoomTypeExistAsync(int id)
         {
             return await _dbContext.Set<RoomType>().AnyAsync(x => x.RoomTypeId == id);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var roomType = await _dbContext.Set<RoomType>().FirstOrDefaultAsync(x => x.RoomTypeId == id);
 
@@ -64,7 +64,7 @@ namespace Hotel.Database.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ChangeActiveOfRoomType(int id)
+        public async Task ChangeActiveOfRoomTypeAsync(int id)
         {
             var roomType = await _dbContext.Set<RoomType>().FirstOrDefaultAsync(x => x.RoomTypeId == id);
             
@@ -73,7 +73,7 @@ namespace Hotel.Database.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(RoomTypeDto dto)
+        public async Task UpdateAsync(RoomTypeDto dto)
         {
             var roomType = await _dbContext.Set<RoomType>().FirstOrDefaultAsync(x => x.RoomTypeId == dto.Id);
             roomType!.Price = dto.Price;

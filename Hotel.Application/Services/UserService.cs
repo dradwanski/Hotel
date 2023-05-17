@@ -21,7 +21,7 @@ namespace Hotel.Application.Services
             _role = role;
             _user = user;
         }
-        public async Task RegisterUser(UserDto dto)
+        public async Task RegisterUserAsync(UserDto dto)
         {
             dto.Role = await _role.GetDefaultRoleAsync();
             var successEmailValidate = EmailValidation.IsEmailValid(dto.Email);
@@ -30,19 +30,19 @@ namespace Hotel.Application.Services
                 throw new NotEmailValidException(dto.Email);
             if (!successPasswordValidate)
                 throw new NotPasswordValidException(dto.Password);
-            if (_user.IsEmailExist(dto).Result)
+            if (_user.IsEmailExistAsync(dto).Result)
                 throw new NotValidException($"Email {dto.Email} exist in database");
             await _user.RegisterUserAsync(dto);
         }
 
-        public async Task<Token> LoginUser(UserDto dto)
+        public async Task<Token> LoginUserAsync(UserDto dto)
         {
-            if (!(await _user.IsEmailExist(dto)))
+            if (!(await _user.IsEmailExistAsync(dto)))
             {
                 throw new NotLoginValidException();
             }
 
-            if (!(await _user.VerifyPassword(dto)))
+            if (!(await _user.VerifyPasswordAsync(dto)))
             {
                 throw new NotLoginValidException();
             }
@@ -52,20 +52,20 @@ namespace Hotel.Application.Services
 
         public Task<List<UserDto>> GetUsers()
         {
-            return _user.GetUsers();
+            return _user.GetUsersAsync();
         }
 
-        public async Task SetRole(int userId, string roleName)
+        public async Task SetRoleAsync(int userId, string roleName)
         {
-            if (!await _user.IsUserExist(userId))
+            if (!await _user.IsUserExistAsync(userId))
             {
                 throw new NotValidException($"User number {userId} does not exist");
             }
-            if (!await _role.IsRoleExist(roleName))
+            if (!await _role.IsRoleExistAsync(roleName))
             {
                 throw new NotValidException($"The specifed role does not exist");
             }
-            await _user.SetRole(userId, roleName);
+            await _user.SetRoleAsync(userId, roleName);
         }
     }
 }

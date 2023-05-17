@@ -28,17 +28,17 @@ namespace Hotel.API.Controllers
             _mapper = mapper;
         }
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser([FromBody] RegisterUser modelUser)
+        public async Task<ActionResult> RegisterUserAsync([FromBody] RegisterUser modelUser)
         {
             var dto =_mapper.Map<UserDto>(modelUser);
-            await _userServices.RegisterUser(dto);
+            await _userServices.RegisterUserAsync(dto);
             return Ok();
         }
         [HttpPost("login")]
-        public async Task<ActionResult> LoginUser([FromBody] LoginUser modelUser)
+        public async Task<ActionResult> LoginUserAsync([FromBody] LoginUser modelUser)
         {
             var dto = _mapper.Map<UserDto>(modelUser);
-            return Ok(await _userServices.LoginUser(dto));
+            return Ok(await _userServices.LoginUserAsync(dto));
         }
 
         [Authorize]
@@ -55,7 +55,7 @@ namespace Hotel.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet("GetUsers")]
-        public async Task<ActionResult> GetUsers()
+        public async Task<ActionResult> GetUsersAsync()
         {
             var users = await _userServices.GetUsers();
             var result = _mapper.Map<List<UserModel>>(users);
@@ -64,9 +64,9 @@ namespace Hotel.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("SetRole")]
-        public async Task<ActionResult> SetRole([FromBody] SetRoleModel modelUser)
+        public async Task<ActionResult> SetRoleAsync([FromBody] SetRoleModel modelUser)
         {
-            await _userServices.SetRole(modelUser.UserId, modelUser.RoleName);
+            await _userServices.SetRoleAsync(modelUser.UserId, modelUser.RoleName);
             return Ok();
         }
     }

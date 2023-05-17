@@ -9,17 +9,17 @@ namespace Hotel.Application.Repository
 {
     public interface IClientRepository
     {
-        Task<bool> IsEmailExist(string email);
-        Task<bool> IsPhoneNumberExist(string phoneNumber);
-        Task<bool> IsClientExist(int id);
-        Task CreateClient(ClientDto clientDto);
-        Task<List<ClientDto>> GetClients(int pageSize, int pageNumber);
-        Task<List<ClientDto>> GetClientsByNameAndLastName(string name, string lastName, int pageSize, int pageNumber);
-        Task<ClientDto> GetClientByMail(string mail);
-        Task<ClientDto> GetByClientByPhoneNumber(string phoneNumber);
-        Task<List<ClientDto>> GetClientsByName(string name, int pageSize, int pageNumber);
-        Task<List<ClientDto>> GetClientsByLastName(string lastName, int pageSize, int pageNumber);
-        Task Update(ClientDto dto);
-        Task Delete(int id);
+        Task<bool> IsEmailExistAsync(string email);
+        Task<bool> IsPhoneNumberExistAsync(string phoneNumber);
+        Task<bool> IsClientExistAsync(int id);
+        Task CreateClientAsync(ClientDto clientDto);
+        Task<List<ClientDto>> GetClientsAsync(int pageSize, int pageNumber);
+        Task<List<ClientDto>> GetClientsByNameAndLastNameAsync(string name, string lastName, int pageSize, int pageNumber);
+        Task<ClientDto> GetClientByMailAsync(string mail);
+        Task<ClientDto> GetByClientByPhoneNumberAsync(string phoneNumber);
+        Task<List<ClientDto>> GetClientsByNameAsync(string name, int pageSize, int pageNumber);
+        Task<List<ClientDto>> GetClientsByLastNameAsync(string lastName, int pageSize, int pageNumber);
+        Task UpdateAsync(ClientDto dto);
+        Task DeleteAsync(int id);
     }
 }

@@ -9,15 +9,15 @@ namespace Hotel.Application.Repository
 {
     public interface IReservationRepository
     {
-        Task CreateReservation(ReservationDto reservationDto);
-        Task<bool> IsReservationExist(int reservationId);
-        Task PutMethodOfPayment(int reservationId, int methodOfPaymentId);
-        Task DeleteReservation(int id);
-        Task<List<ReservationDto>> GetReservationsByClientid(int clientid, int pageSize, int pageNumber);
-        Task<List<ReservationDto>> GetReservationsByRoomId(int roomId, int pageSize, int pageNumber);
-        Task<List<ReservationDto>> GetReservationsByDate(DateTime startDate, DateTime endDate, int pageSize, int pageNumber);
-        Task UpdateReservation(ReservationDto reservationDto);
-        Task ConfirmReservation(int reservationId);
-        Task CancelReservation(int reservationId);
+        Task CreateReservationAsync(ReservationDto reservationDto);
+        Task<bool> IsReservationExistAsync(int reservationId);
+        Task PutMethodOfPaymentAsync(int reservationId, int methodOfPaymentId);
+        Task DeleteReservationAsync(int id);
+        Task<List<ReservationDto>> GetReservationsByClientidAsync(int clientid, int pageSize, int pageNumber);
+        Task<List<ReservationDto>> GetReservationsByRoomIdAsync(int roomId, int pageSize, int pageNumber);
+        Task<List<ReservationDto>> GetReservationsByDateAsync(DateTime startDate, DateTime endDate, int pageSize, int pageNumber);
+        Task UpdateReservationAsync(ReservationDto reservationDto);
+        Task ConfirmReservationAsync(int reservationId);
+        Task CancelReservationAsync(int reservationId);
     }
 }

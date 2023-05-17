@@ -22,30 +22,30 @@ namespace Hotel.Database.Repository
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<List<MethodOfPaymentDto>> GetMethodOfPayments()
+        public async Task<List<MethodOfPaymentDto>> GetMethodOfPaymentsAsync()
         {
             var listOfMethodOfPayments = await _dbContext.Set<MethodOfPayment>().ToListAsync(); 
             var listOfPaymentDtos = _mapper.Map<List<MethodOfPaymentDto>>(listOfMethodOfPayments);
             return listOfPaymentDtos;
         }
 
-        public async Task<bool> IsMethodOfPaymentsExistByName(string methodOfPaymentName)
+        public async Task<bool> IsMethodOfPaymentsExistByNameAsync(string methodOfPaymentName)
         {
             return await _dbContext.Set<MethodOfPayment>().AnyAsync(x => x.MethodOfPaymentName == methodOfPaymentName);
         }
-        public async Task<bool> IsMethodOfPaymentsExistById(int methodOfPaymentId)
+        public async Task<bool> IsMethodOfPaymentsExistByIdAsync(int methodOfPaymentId)
         {
             return await _dbContext.Set<MethodOfPayment>().AnyAsync(x => x.MethodOfPaymentId == methodOfPaymentId);
         }
 
-        public async Task CreateMethodOfPayment(MethodOfPaymentDto methodOfPaymentDto)
+        public async Task CreateMethodOfPaymentAsync(MethodOfPaymentDto methodOfPaymentDto)
         {
             var methodOfPayment = _mapper.Map<MethodOfPayment>(methodOfPaymentDto);
             await _dbContext.AddAsync(methodOfPayment);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteMethodOfPayment(int methodOfPaymentId)
+        public async Task DeleteMethodOfPaymentAsync(int methodOfPaymentId)
         {
             var methodOfPayment = await _dbContext.Set<MethodOfPayment>()
                 .FirstOrDefaultAsync(x => x.MethodOfPaymentId == methodOfPaymentId);

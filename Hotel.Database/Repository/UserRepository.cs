@@ -47,16 +47,16 @@ namespace Hotel.Database.Repository
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public Task<bool> IsEmailExist(UserDto dto)
+        public Task<bool> IsEmailExistAsync(UserDto dto)
         {
             return _dbContext.Set<User>().AnyAsync(x => x.Email.ToUpper() == dto.Email.ToUpper());
         }
-        public Task<bool> IsUserExist(int userId)
+        public Task<bool> IsUserExistAsync(int userId)
         {
             return _dbContext.Set<User>().AnyAsync(x => x.UserId == userId);
         }
 
-        public async Task<bool> VerifyPassword(UserDto dto)
+        public async Task<bool> VerifyPasswordAsync(UserDto dto)
         {
             var user = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.Email == dto.Email);
             return _passwordHasher.VerifyPassword(user, dto.Password);
@@ -96,14 +96,14 @@ namespace Hotel.Database.Repository
             };
         }
 
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<UserDto>> GetUsersAsync()
         {
             var users = await _dbContext.Set<User>().Include(x => x.Role).ToListAsync();
             var result = _mapper.Map<List<UserDto>>(users);
             return result;
         }
 
-        public async Task SetRole(int userId, string roleName)
+        public async Task SetRoleAsync(int userId, string roleName)
         {
             var user = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.UserId == userId);
             var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.RoleName == roleName);

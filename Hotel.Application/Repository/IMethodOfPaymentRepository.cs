@@ -9,10 +9,10 @@ namespace Hotel.Application.Repository
 {
     public interface IMethodOfPaymentRepository
     {
-        Task<List<MethodOfPaymentDto>> GetMethodOfPayments();
-        Task<bool> IsMethodOfPaymentsExistByName(string methodOfPaymentName);
-        Task<bool> IsMethodOfPaymentsExistById(int methodOfPaymentId);
-        Task CreateMethodOfPayment(MethodOfPaymentDto methodOfPayment);
-        Task DeleteMethodOfPayment(int methodOfPaymentId);
+        Task<List<MethodOfPaymentDto>> GetMethodOfPaymentsAsync();
+        Task<bool> IsMethodOfPaymentsExistByNameAsync(string methodOfPaymentName);
+        Task<bool> IsMethodOfPaymentsExistByIdAsync(int methodOfPaymentId);
+        Task CreateMethodOfPaymentAsync(MethodOfPaymentDto methodOfPayment);
+        Task DeleteMethodOfPaymentAsync(int methodOfPaymentId);
     }
 }

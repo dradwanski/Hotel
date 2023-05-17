@@ -9,14 +9,14 @@ namespace Hotel.Application.Repository
 {
     public interface IRoomRepository
     {
-        Task<int> CreateRoom(RoomDto dto);
+        Task<int> CreateRoomAsync(RoomDto dto);
 
-        Task<List<RoomDto>> GetRooms(int pageNumber);
-        Task<RoomDto> GetRoomByNumber(int roomNumber);
-        Task<RoomDto> GetRoomById(int id);
-        Task<bool> IsRoomNumberExist(int roomNumber);
-        Task<bool> IsRoomExist(int id);
-        Task Update(RoomDto dto);
-        Task<bool> IsRoomReserved(int roomId, DateTime startDate, DateTime endDate);
+        Task<List<RoomDto>> GetRoomsAsync(int pageNumber);
+        Task<RoomDto> GetRoomByNumberAsync(int roomNumber);
+        Task<RoomDto> GetRoomByIdAsync(int id);
+        Task<bool> IsRoomNumberExistAsync(int roomNumber);
+        Task<bool> IsRoomExistAsync(int id);
+        Task UpdateAsync(RoomDto dto);
+        Task<bool> IsRoomReservedAsync(int roomId, DateTime startDate, DateTime endDate);
     }
 }

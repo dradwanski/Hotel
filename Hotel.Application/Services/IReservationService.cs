@@ -9,14 +9,14 @@ namespace Hotel.Application.Services
 {
     public interface IReservationService
     {
-        Task CreateReservation(ReservationDto reservationDto);
-        Task PutMethodOfPayment(int reservationId, int methodOfPaymentId);
-        Task DeleteReservation(int id);
-        Task<List<ReservationDto>> GetReservationsByClientid(int clientid, int pageSize, int pageNumber);
-        Task<List<ReservationDto>> GetReservationsByRoomId(int roomId, int pageSize, int pageNumber);
-        Task<List<ReservationDto>> GetReservationsByDate(string startDate, string? endDate, int pageSize, int pageNumber);
-        Task UpdateReservation(int reservationId, ReservationDto reservationDto);
-        Task ConfirmReservation(int reservationId);
-        Task CancelReservation(int reservationId);
+        Task CreateReservationAsync(ReservationDto reservationDto);
+        Task PutMethodOfPaymentAsync(int reservationId, int methodOfPaymentId);
+        Task DeleteReservationAsync(int id);
+        Task<List<ReservationDto>> GetReservationsByClientidAsync(int clientid, int pageSize, int pageNumber);
+        Task<List<ReservationDto>> GetReservationsByRoomIdAsync(int roomId, int pageSize, int pageNumber);
+        Task<List<ReservationDto>> GetReservationsByDateAsync(string startDate, string? endDate, int pageSize, int pageNumber);
+        Task UpdateReservationAsync(int reservationId, ReservationDto reservationDto);
+        Task ConfirmReservationAsync(int reservationId);
+        Task CancelReservationAsync(int reservationId);
     }
 }

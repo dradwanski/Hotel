@@ -21,29 +21,29 @@ namespace Hotel.Database.Repository
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        public async Task<bool> IsEmailExist(string email)
+        public async Task<bool> IsEmailExistAsync(string email)
         {
             return await _dbContext.Set<Client>().AnyAsync(x => x.Email.ToUpper() == email.ToUpper());
         }
 
-        public async Task<bool> IsPhoneNumberExist(string phoneNumber)
+        public async Task<bool> IsPhoneNumberExistAsync(string phoneNumber)
         {
             return await _dbContext.Set<Client>().AnyAsync(x => x.PhoneNumber == phoneNumber);
         }
 
-        public async Task<bool> IsClientExist(int id)
+        public async Task<bool> IsClientExistAsync(int id)
         {
             return await _dbContext.Set<Client>().AnyAsync(x => x.Id == id);
         }
 
-        public async Task CreateClient(ClientDto clientDto)
+        public async Task CreateClientAsync(ClientDto clientDto)
         {
             var client =_mapper.Map<Client>(clientDto);
             await _dbContext.AddAsync(client);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<ClientDto>> GetClients(int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsAsync(int pageSize, int pageNumber)
         {
             var listOfClients = await _dbContext.Set<Client>()
                 .Skip(pageSize * (pageNumber - 1))
@@ -53,7 +53,7 @@ namespace Hotel.Database.Repository
             return listOfClientsDto;
         }
 
-        public async Task<List<ClientDto>> GetClientsByNameAndLastName(string name, string lastName, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByNameAndLastNameAsync(string name, string lastName, int pageSize, int pageNumber)
         {
             var listOfClients = await _dbContext.Set<Client>()
                 .Where(x => x.Name.StartsWith(name) && x.LastName.StartsWith(lastName))
@@ -64,21 +64,21 @@ namespace Hotel.Database.Repository
             return listOfClientsDto;
         }
 
-        public async Task<ClientDto> GetClientByMail(string mail)
+        public async Task<ClientDto> GetClientByMailAsync(string mail)
         {
             var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Email == mail);
             var clientDto = _mapper.Map<ClientDto>(client);
             return clientDto;
         }
 
-        public async Task<ClientDto> GetByClientByPhoneNumber(string phoneNumber)
+        public async Task<ClientDto> GetByClientByPhoneNumberAsync(string phoneNumber)
         {
             var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
             var clientDto = _mapper.Map<ClientDto>(client);
             return clientDto;
         }
 
-        public async Task<List<ClientDto>> GetClientsByName(string name, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByNameAsync(string name, int pageSize, int pageNumber)
         {
             var listOfClients = await _dbContext.Set<Client>()
                 .Where(x => x.Name.StartsWith(name))
@@ -89,7 +89,7 @@ namespace Hotel.Database.Repository
             return listOfClientsDto;
         }
 
-        public async Task<List<ClientDto>> GetClientsByLastName(string lastName, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByLastNameAsync(string lastName, int pageSize, int pageNumber)
         {
             var listOfClients = await _dbContext.Set<Client>()
                 .Where(x => x.LastName.StartsWith(lastName))
@@ -100,7 +100,7 @@ namespace Hotel.Database.Repository
             return listOfClientsDto;
         }
 
-        public async Task Update(ClientDto dto)
+        public async Task UpdateAsync(ClientDto dto)
         {
             var mappedDto = _mapper.Map<Client>(dto);
             var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Id == mappedDto.Id);
@@ -117,7 +117,7 @@ namespace Hotel.Database.Repository
 
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var client = await _dbContext.Set<Client>().FirstOrDefaultAsync(x => x.Id == id);
             _dbContext.Remove(client);

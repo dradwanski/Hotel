@@ -29,41 +29,41 @@ namespace Hotel.API.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult> GetRoomTypes()
+        public async Task<ActionResult> GetRoomTypesAsync()
         {
-            return Ok(await _roomTypeService.GetRoomTypes());
+            return Ok(await _roomTypeService.GetRoomTypesAsync());
         }
         [HttpGet("Get/{Id}")]
-        public async Task<ActionResult> GetRoomTypeById([FromRoute] int id)
+        public async Task<ActionResult> GetRoomTypeByIdAsync([FromRoute] int id)
         {
-            return Ok(await _roomTypeService.GetRoomTypeById(id));
+            return Ok(await _roomTypeService.GetRoomTypeByIdAsync(id));
         }
         [HttpPost("AddRoomType")]
-        public async Task<ActionResult> CreateRoomType([FromBody] RoomTypeModel roomTypeModel)
+        public async Task<ActionResult> CreateRoomTypeAsync([FromBody] RoomTypeModel roomTypeModel)
         {
             var dto = _mapper.Map<RoomTypeDto>(roomTypeModel);
-            var id = await _roomTypeService.CreateRoomType(dto);
+            var id = await _roomTypeService.CreateRoomTypeAsync(dto);
             return Created($"Get/{id}", null);
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> Delete([FromRoute] int id)
+        public async Task<ActionResult> DeleteAsync([FromRoute] int id)
         {
-            await _roomTypeService.Delete(id);
+            await _roomTypeService.DeleteAsync(id);
             return NoContent();
         }
         [HttpPut("Active/{Id}")]
-        public async Task<ActionResult> ChangeActiveOfRoomType([FromRoute] int id)
+        public async Task<ActionResult> ChangeActiveOfRoomTypeAsync([FromRoute] int id)
         {
-            await _roomTypeService.ChangeActiveOfRoomType(id);
+            await _roomTypeService.ChangeActiveOfRoomTypeAsync(id);
             return Ok();
         }
         [HttpPut("Update/{Id}")]
-        public async Task<ActionResult> Update([FromRoute]int id, [FromBody] RoomTypeModel roomTypeModel)
+        public async Task<ActionResult> UpdateAsync([FromRoute]int id, [FromBody] RoomTypeModel roomTypeModel)
         {
             var dto = _mapper.Map<RoomTypeDto>(roomTypeModel);
             dto.Id = id;
-            await _roomTypeService.Update(dto);
+            await _roomTypeService.UpdateAsync(dto);
             return Ok();
         }
     }

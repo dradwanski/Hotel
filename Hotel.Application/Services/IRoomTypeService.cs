@@ -9,11 +9,11 @@ namespace Hotel.Application.Services
 {
     public interface IRoomTypeService
     {
-        Task<List<RoomTypeDto>> GetRoomTypes();
-        Task<RoomTypeDto> GetRoomTypeById(int id);
-        Task<int> CreateRoomType(RoomTypeDto dto);
-        Task Delete(int id);
-        Task ChangeActiveOfRoomType(int id);
-        Task Update(RoomTypeDto dto);
+        Task<List<RoomTypeDto>> GetRoomTypesAsync();
+        Task<RoomTypeDto> GetRoomTypeByIdAsync(int id);
+        Task<int> CreateRoomTypeAsync(RoomTypeDto dto);
+        Task DeleteAsync(int id);
+        Task ChangeActiveOfRoomTypeAsync(int id);
+        Task UpdateAsync(RoomTypeDto dto);
     }
 }

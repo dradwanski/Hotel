@@ -22,77 +22,77 @@ namespace Hotel.Application.Services
             _clientRepository = clientRepository;
             _validator = validator;
         }
-        public async Task CreateClient(ClientDto clientDto)
+        public async Task CreateClientAsync(ClientDto clientDto)
         {
             _validator.Validate(clientDto);
 
             await _validator.IsExistAsync(clientDto);
 
-            await _clientRepository.CreateClient(clientDto);
+            await _clientRepository.CreateClientAsync(clientDto);
         }
 
-        public async Task<List<ClientDto>> GetClients(int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsAsync(int pageSize, int pageNumber)
         {
-            return await _clientRepository.GetClients(pageSize, pageNumber);
+            return await _clientRepository.GetClientsAsync(pageSize, pageNumber);
         }
 
-        public async Task<List<ClientDto>> GetClientsByNameAndLastName(string name, string lastName, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByNameAndLastNameAsync(string name, string lastName, int pageSize, int pageNumber)
         {
 
-            return await _clientRepository.GetClientsByNameAndLastName(name, lastName, pageSize, pageNumber);
+            return await _clientRepository.GetClientsByNameAndLastNameAsync(name, lastName, pageSize, pageNumber);
 
         }
 
-        public async Task<ClientDto> GetClientByMail(string mail)
+        public async Task<ClientDto> GetClientByMailAsync(string mail)
         {
-            if (!await _clientRepository.IsEmailExist(mail))
+            if (!await _clientRepository.IsEmailExistAsync(mail))
             {
                 throw new NotValidException("Email does not exist");
             }
 
-            return await _clientRepository.GetClientByMail(mail);
+            return await _clientRepository.GetClientByMailAsync(mail);
         }
 
-        public async Task<ClientDto> GetByClientByPhoneNumber(string phoneNumber)
+        public async Task<ClientDto> GetByClientByPhoneNumberAsync(string phoneNumber)
         {
-            if (!await _clientRepository.IsPhoneNumberExist(phoneNumber))
+            if (!await _clientRepository.IsPhoneNumberExistAsync(phoneNumber))
             {
                 throw new NotValidException("Phone number does not exist");
             }
 
-            return await _clientRepository.GetByClientByPhoneNumber(phoneNumber);
+            return await _clientRepository.GetByClientByPhoneNumberAsync(phoneNumber);
         }
 
-        public async Task<List<ClientDto>> GetClientsByName(string name, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByNameAsync(string name, int pageSize, int pageNumber)
         {
-            return await _clientRepository.GetClientsByName(name, pageSize, pageNumber);
+            return await _clientRepository.GetClientsByNameAsync(name, pageSize, pageNumber);
         }
 
-        public async Task<List<ClientDto>> GetClientsByLastName(string lastName, int pageSize, int pageNumber)
+        public async Task<List<ClientDto>> GetClientsByLastNameAsync(string lastName, int pageSize, int pageNumber)
         {
-            return await _clientRepository.GetClientsByLastName(lastName, pageSize, pageNumber);
+            return await _clientRepository.GetClientsByLastNameAsync(lastName, pageSize, pageNumber);
         }
 
-        public async Task Update(ClientDto dto)
+        public async Task UpdateAsync(ClientDto dto)
         {
             _validator.Validate(dto);
 
             await _validator.IsExistAsync(dto);
 
-            await _clientRepository.Update(dto);
+            await _clientRepository.UpdateAsync(dto);
 
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            if (!await _clientRepository.IsClientExist(id))
+            if (!await _clientRepository.IsClientExistAsync(id))
             {
 
                 throw new NotValidException($"Client with id {id} does not exist");
 
             }
 
-            await _clientRepository.Delete(id);
+            await _clientRepository.DeleteAsync(id);
             
         }
     }

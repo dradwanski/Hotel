@@ -32,7 +32,7 @@ namespace Hotel.API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CreateReservation([FromBody] ReservationModel reservationModel)
+        public async Task<ActionResult> CreateReservationAsync([FromBody] ReservationModel reservationModel)
         {
             if(!DateOnly.TryParse(reservationModel.ReservationStart, out var startDate))
             {
@@ -54,36 +54,36 @@ namespace Hotel.API.Controllers
             reservationDto.LastEditedUserId = userId;
 
 
-            await _reservationService.CreateReservation(reservationDto);
+            await _reservationService.CreateReservationAsync(reservationDto);
             return Ok();
         }
 
         [HttpPut("MethodOfPayment/{reservationId}")]
-        public async Task<ActionResult> PutMethodOfPayment([FromRoute] int reservationId, [FromQuery] int methodOfPaymentId)
+        public async Task<ActionResult> PutMethodOfPaymentAsync([FromRoute] int reservationId, [FromQuery] int methodOfPaymentId)
         {
-            await _reservationService.PutMethodOfPayment(reservationId, methodOfPaymentId);
+            await _reservationService.PutMethodOfPaymentAsync(reservationId, methodOfPaymentId);
 
             return Ok();
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteReservation([FromRoute] int id)
+        public async Task<ActionResult> DeleteReservationAsync([FromRoute] int id)
         {
-            await _reservationService.DeleteReservation(id);
+            await _reservationService.DeleteReservationAsync(id);
             return NoContent();
         }
 
         [HttpGet("GetBy")]
-        public async Task<ActionResult> GetReservation([FromQuery]int? Clientid, [FromQuery]int? RoomId, [FromQuery]string? startDate, [FromQuery]string? endDate, [FromQuery]int? pageSize = 10, [FromQuery]int? pageNumber = 1)
+        public async Task<ActionResult> GetReservationAsync([FromQuery]int? Clientid, [FromQuery]int? RoomId, [FromQuery]string? startDate, [FromQuery]string? endDate, [FromQuery]int? pageSize = 10, [FromQuery]int? pageNumber = 1)
         {
             if (Clientid is not null)
             {
-                var reservations = await _reservationService.GetReservationsByClientid(Clientid.Value, pageSize.Value, pageNumber.Value);
+                var reservations = await _reservationService.GetReservationsByClientidAsync(Clientid.Value, pageSize.Value, pageNumber.Value);
                 return Ok(reservations);
             }
             if (RoomId is not null)
             {
-                var reservations = await _reservationService.GetReservationsByRoomId(RoomId.Value, pageSize.Value, pageNumber.Value);
+                var reservations = await _reservationService.GetReservationsByRoomIdAsync(RoomId.Value, pageSize.Value, pageNumber.Value);
                 return Ok(reservations);
             }
             if (startDate is not null && endDate is not null)
@@ -100,7 +100,7 @@ namespace Hotel.API.Controllers
                 }
                 endDate = endReservationDate.ToString();
 
-                var reservations = await _reservationService.GetReservationsByDate(startDate, endDate, pageSize.Value, pageNumber.Value);
+                var reservations = await _reservationService.GetReservationsByDateAsync(startDate, endDate, pageSize.Value, pageNumber.Value);
                 return Ok(reservations);
             }
 
@@ -109,7 +109,7 @@ namespace Hotel.API.Controllers
 
 
         [HttpPut("/{reservationId}")]
-        public async Task<ActionResult> UpdateReservation([FromRoute] int reservationId, [FromBody] ReservationModel reservationModel)
+        public async Task<ActionResult> UpdateReservationAsync([FromRoute] int reservationId, [FromBody] ReservationModel reservationModel)
         {
             if (!DateOnly.TryParse(reservationModel.ReservationStart, out var startDate))
             {
@@ -128,21 +128,21 @@ namespace Hotel.API.Controllers
             reservationDto.LastEditedUserId = userId;
             reservationDto.ReservationId = reservationId;
 
-            await _reservationService.UpdateReservation(reservationId, reservationDto);
+            await _reservationService.UpdateReservationAsync(reservationId, reservationDto);
             return Ok();
         }
 
         [HttpPut("Confrim/{reservationId}")]
-        public async Task<ActionResult> ConfirmReservation([FromRoute] int reservationId)
+        public async Task<ActionResult> ConfirmReservationAsync([FromRoute] int reservationId)
         {
-            await _reservationService.ConfirmReservation(reservationId);
+            await _reservationService.ConfirmReservationAsync(reservationId);
             return Ok();
         }
 
         [HttpPut("Cancel/{reservationId}")]
-        public async Task<ActionResult> CancelReservation([FromRoute] int reservationId)
+        public async Task<ActionResult> CancelReservationAsync([FromRoute] int reservationId)
         {
-            await _reservationService.CancelReservation(reservationId);
+            await _reservationService.CancelReservationAsync(reservationId);
             return Ok();
         }
     }

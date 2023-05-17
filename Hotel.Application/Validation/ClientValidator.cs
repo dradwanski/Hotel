@@ -20,17 +20,17 @@ namespace Hotel.Application.Validation
         }
         public async Task<bool> IsExistAsync(ClientDto obj)
         {
-            if (obj.Id != 0 && !await _clientRepository.IsClientExist(obj.Id))
+            if (obj.Id != 0 && !await _clientRepository.IsClientExistAsync(obj.Id))
             {
                 throw new NotValidException("Client does not exist");
             }
 
-            if (await _clientRepository.IsPhoneNumberExist(obj.PhoneNumber))
+            if (await _clientRepository.IsPhoneNumberExistAsync(obj.PhoneNumber))
             {
                 throw new NotValidException("The phone number is already taken");
             }
 
-            if (await _clientRepository.IsEmailExist(obj.Email))
+            if (await _clientRepository.IsEmailExistAsync(obj.Email))
             {
                 throw new NotValidException("Email is already taken");
             }

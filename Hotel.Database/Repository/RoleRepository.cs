@@ -28,7 +28,7 @@ namespace Hotel.Database.Repository
             return dto;
         }
 
-        public Task<bool> IsRoleExist(string roleName)
+        public Task<bool> IsRoleExistAsync(string roleName)
         {
             return _dbContext.Roles.AnyAsync(x => x.RoleName == roleName);
         }

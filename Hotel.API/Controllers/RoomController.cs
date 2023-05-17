@@ -28,38 +28,38 @@ namespace Hotel.API.Controllers
 
 
         [HttpPost("AddRoom")]
-        public async Task<ActionResult> CreateRoom([FromBody] RoomModel roomModel)
+        public async Task<ActionResult> CreateRoomAsync([FromBody] RoomModel roomModel)
         {
             var dto = _mapper.Map<RoomDto>(roomModel);
-            var id = await _roomService.CreateRoom(dto);
+            var id = await _roomService.CreateRoomAsync(dto);
             return Created($"Get/{id}", null);
         }
 
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult> GetRooms([FromQuery]int pageNumber)
+        public async Task<ActionResult> GetRoomsAsync([FromQuery]int pageNumber)
         {
-            return Ok(await _roomService.GetRooms(pageNumber));
+            return Ok(await _roomService.GetRoomsAsync(pageNumber));
         }
 
         [HttpGet("GetByNumber/{roomNumber}")]
-        public async Task<ActionResult> GetRoomByNumber([FromRoute] int roomNumber)
+        public async Task<ActionResult> GetRoomByNumberAsync([FromRoute] int roomNumber)
         {
-            return Ok(await _roomService.GetRoomByNumber(roomNumber));
+            return Ok(await _roomService.GetRoomByNumberAsync(roomNumber));
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<ActionResult> GetRoomById([FromRoute] int id)
+        public async Task<ActionResult> GetRoomByIdAsync([FromRoute] int id)
         {
-            return Ok(await _roomService.GetRoomById(id));
+            return Ok(await _roomService.GetRoomByIdAsync(id));
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] RoomModel roomModel)
+        public async Task<ActionResult> UpdateAsync([FromRoute] int id, [FromBody] RoomModel roomModel)
         {
             var dto = _mapper.Map<RoomDto>(roomModel);
             dto.RoomId = id;
-            await _roomService.Update(dto);
+            await _roomService.UpdateAsync(dto);
             return Ok();
         }
 

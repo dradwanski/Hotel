@@ -27,7 +27,7 @@ namespace Hotel.Database.Repository
         }
 
 
-        public async Task CreateReservation(ReservationDto reservationDto)
+        public async Task CreateReservationAsync(ReservationDto reservationDto)
         {
             var client = await _dbContext
                 .Set<Client>()
@@ -59,7 +59,7 @@ namespace Hotel.Database.Repository
 
         }
 
-        public async Task<bool> IsReservationExist(int reservationId)
+        public async Task<bool> IsReservationExistAsync(int reservationId)
         {
             var reservation = await _dbContext
                 .Set<Reservation>()
@@ -68,7 +68,7 @@ namespace Hotel.Database.Repository
             return reservation is not null;
         }
 
-        public async Task PutMethodOfPayment(int reservationId, int methodOfPaymentId)
+        public async Task PutMethodOfPaymentAsync(int reservationId, int methodOfPaymentId)
         {
             var methodOfPayment = await _dbContext
                 .Set<MethodOfPayment>()
@@ -85,7 +85,7 @@ namespace Hotel.Database.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteReservation(int id)
+        public async Task DeleteReservationAsync(int id)
         {
             var reservation = await _dbContext
                 .Set<Reservation>()
@@ -96,7 +96,7 @@ namespace Hotel.Database.Repository
 
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByClientid(int clientid, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByClientidAsync(int clientid, int pageSize, int pageNumber)
         {
             var reservations= await _dbContext
                 .Set<Reservation>()
@@ -110,7 +110,7 @@ namespace Hotel.Database.Repository
             return reservationsDto;
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByRoomId(int roomId, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByRoomIdAsync(int roomId, int pageSize, int pageNumber)
         {
 
             var reservations = await _dbContext
@@ -139,7 +139,7 @@ namespace Hotel.Database.Repository
             return reservationsDtos;
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByDate(DateTime startDate, DateTime endDate, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByDateAsync(DateTime startDate, DateTime endDate, int pageSize, int pageNumber)
         {
             var reservations = await _dbContext
                 .Set<Reservation>()
@@ -167,7 +167,7 @@ namespace Hotel.Database.Repository
             return reservationsDto;
         }
 
-        public async Task UpdateReservation(ReservationDto reservationDto)
+        public async Task UpdateReservationAsync(ReservationDto reservationDto)
         {
             var list = new List<Task>(3);
 
@@ -203,7 +203,7 @@ namespace Hotel.Database.Repository
 
         }
 
-        public async Task ConfirmReservation(int reservationId)
+        public async Task ConfirmReservationAsync(int reservationId)
         {
             var reservation = await _dbContext
                 .Set<Reservation>()
@@ -217,7 +217,7 @@ namespace Hotel.Database.Repository
 
         }
 
-        public async Task CancelReservation(int reservationId)
+        public async Task CancelReservationAsync(int reservationId)
         {
             var reservation = await _dbContext
                 .Set<Reservation>()

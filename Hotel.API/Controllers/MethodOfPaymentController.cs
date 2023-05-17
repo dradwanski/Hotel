@@ -27,21 +27,21 @@ namespace Hotel.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMethodOfPayments()
+        public async Task<ActionResult> GetMethodOfPaymentsAsync()
         {
-            return Ok(await _methodOfPaymentService.GetMethodOfPayments());
+            return Ok(await _methodOfPaymentService.GetMethodOfPaymentsAsync());
         }
         [HttpPost]
-        public async Task<ActionResult> CreateMethodOfPayment([FromBody]MethodOfPaymentModel methodOfPaymentModel)
+        public async Task<ActionResult> CreateMethodOfPaymentAsync([FromBody]MethodOfPaymentModel methodOfPaymentModel)
         {
             var dto =_mapper.Map<MethodOfPaymentDto>(methodOfPaymentModel);
-            await _methodOfPaymentService.CreateMethodOfPayment(dto);
+            await _methodOfPaymentService.CreateMethodOfPaymentAsync(dto);
             return Ok();
         }
         [HttpDelete("{methodOfPaymentId}")]
-        public async Task<ActionResult> DeleteMethodOfPayment([FromRoute] int methodOfPaymentId)
+        public async Task<ActionResult> DeleteMethodOfPaymentAsync([FromRoute] int methodOfPaymentId)
         {
-            await _methodOfPaymentService.DeleteMethodOfPayment(methodOfPaymentId);
+            await _methodOfPaymentService.DeleteMethodOfPaymentAsync(methodOfPaymentId);
             return Ok();
         }
 

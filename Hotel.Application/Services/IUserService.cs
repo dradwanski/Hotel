@@ -10,9 +10,9 @@ namespace Hotel.Application.Services
 {
     public interface IUserService
     {
-        Task RegisterUser(UserDto dto);
-        Task<Token> LoginUser(UserDto dto);
+        Task RegisterUserAsync(UserDto dto);
+        Task<Token> LoginUserAsync(UserDto dto);
         Task<List<UserDto>> GetUsers();
-        Task SetRole(int userId, string roleName);
+        Task SetRoleAsync(int userId, string roleName);
     }
 }

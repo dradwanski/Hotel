@@ -10,6 +10,6 @@ namespace Hotel.Application.Repository
     public interface IRoleRepository
     {
         Task<RoleDto> GetDefaultRoleAsync();
-        Task<bool> IsRoleExist(string roleName);
+        Task<bool> IsRoleExistAsync(string roleName);
     }
 }

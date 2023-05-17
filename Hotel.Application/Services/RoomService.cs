@@ -20,11 +20,11 @@ namespace Hotel.Application.Services
             _roomTypeRepository = roomTypeRepository;
         }
 
-        public async Task<int> CreateRoom(RoomDto dto)
+        public async Task<int> CreateRoomAsync(RoomDto dto)
         {
-            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExist(dto.RoomTypeId);
+            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExistAsync(dto.RoomTypeId);
 
-            var isRoomNumberExist = await _roomRepository.IsRoomNumberExist(dto.Number);
+            var isRoomNumberExist = await _roomRepository.IsRoomNumberExistAsync(dto.Number);
 
             if (!isRoomTypeExist)
             {
@@ -35,42 +35,42 @@ namespace Hotel.Application.Services
                 throw new NotValidException("Room does exist");
             }
 
-            return await _roomRepository.CreateRoom(dto);
+            return await _roomRepository.CreateRoomAsync(dto);
            
         }
 
-        public async Task<List<RoomDto>> GetRooms(int pageNumber)
+        public async Task<List<RoomDto>> GetRoomsAsync(int pageNumber)
         {
-            return await _roomRepository.GetRooms(pageNumber);
+            return await _roomRepository.GetRoomsAsync(pageNumber);
         }
 
-        public async Task<RoomDto> GetRoomByNumber(int roomNumber)
+        public async Task<RoomDto> GetRoomByNumberAsync(int roomNumber)
         {
-            var isRoomNumberExist = await _roomRepository.IsRoomNumberExist(roomNumber);
+            var isRoomNumberExist = await _roomRepository.IsRoomNumberExistAsync(roomNumber);
             if (isRoomNumberExist)
             {
-                return await _roomRepository.GetRoomByNumber(roomNumber);
+                return await _roomRepository.GetRoomByNumberAsync(roomNumber);
             }
             throw new NotValidException("The room does not exist");
         }
 
-        public async Task<RoomDto> GetRoomById(int id)
+        public async Task<RoomDto> GetRoomByIdAsync(int id)
         {
-            var isRoomExist = await _roomRepository.IsRoomExist(id);
+            var isRoomExist = await _roomRepository.IsRoomExistAsync(id);
             if (isRoomExist)
             {
-                return await _roomRepository.GetRoomById(id);
+                return await _roomRepository.GetRoomByIdAsync(id);
             }
             throw new NotValidException("The room does not exist");
         }
 
-        public async Task Update(RoomDto dto)
+        public async Task UpdateAsync(RoomDto dto)
         {
-            var isRoomExist = await _roomRepository.IsRoomExist(dto.RoomId);
+            var isRoomExist = await _roomRepository.IsRoomExistAsync(dto.RoomId);
 
-            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExist(dto.RoomTypeId);
+            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExistAsync(dto.RoomTypeId);
 
-            var isRoomNumberExist = await _roomRepository.IsRoomNumberExist(dto.Number);
+            var isRoomNumberExist = await _roomRepository.IsRoomNumberExistAsync(dto.Number);
 
 
             if (isRoomNumberExist)
@@ -86,7 +86,7 @@ namespace Hotel.Application.Services
                 throw new NotValidException("Room does not exist");
             }
 
-            await _roomRepository.Update(dto);
+            await _roomRepository.UpdateAsync(dto);
         }
     }
 }

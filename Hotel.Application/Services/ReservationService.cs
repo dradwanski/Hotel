@@ -26,19 +26,19 @@ namespace Hotel.Application.Services
             _methodOfPayment = methodOfPayment;
         }
 
-        public async Task CreateReservation(ReservationDto reservationDto)
+        public async Task CreateReservationAsync(ReservationDto reservationDto)
         {
-            if(!await _clientRepository.IsClientExist(reservationDto.ClientId))
+            if(!await _clientRepository.IsClientExistAsync(reservationDto.ClientId))
             {
                 throw new NotValidException("Client does not exist");
             }
 
-            if (!await _roomRepository.IsRoomExist(reservationDto.RoomId))
+            if (!await _roomRepository.IsRoomExistAsync(reservationDto.RoomId))
             {
                 throw new NotValidException("Room does not exist");
             }
 
-            if (reservationDto.MethodOfPaymentId is not null && !await _methodOfPayment.IsMethodOfPaymentsExistById(reservationDto.MethodOfPaymentId.Value))
+            if (reservationDto.MethodOfPaymentId is not null && !await _methodOfPayment.IsMethodOfPaymentsExistByIdAsync(reservationDto.MethodOfPaymentId.Value))
             { 
                 throw new NotValidException("Method of payment does not exist");
             }
@@ -49,49 +49,49 @@ namespace Hotel.Application.Services
                 throw new NotValidException("Invalid date");
             }
 
-            if (await _roomRepository.IsRoomReserved(reservationDto.RoomId, reservationDto.ReservationStart,
+            if (await _roomRepository.IsRoomReservedAsync(reservationDto.RoomId, reservationDto.ReservationStart,
                     reservationDto.ReservationEnd))
             {
                 throw new NotValidException("The room is unavailable");
             }
 
-            await _reservationRepository.CreateReservation(reservationDto);
+            await _reservationRepository.CreateReservationAsync(reservationDto);
         }
 
-        public async Task PutMethodOfPayment(int reservationId, int methodOfPaymentId)
+        public async Task PutMethodOfPaymentAsync(int reservationId, int methodOfPaymentId)
         {
-            if (!await _methodOfPayment.IsMethodOfPaymentsExistById(methodOfPaymentId))
+            if (!await _methodOfPayment.IsMethodOfPaymentsExistByIdAsync(methodOfPaymentId))
             {
                 throw new NotValidException("Method of payment does not exist");
             }
-            if (!await _reservationRepository.IsReservationExist(reservationId))
+            if (!await _reservationRepository.IsReservationExistAsync(reservationId))
             {
                 throw new NotValidException("Reservation does not exist");
             }
-            await _reservationRepository.PutMethodOfPayment(reservationId, methodOfPaymentId);
+            await _reservationRepository.PutMethodOfPaymentAsync(reservationId, methodOfPaymentId);
         }
 
-        public async Task DeleteReservation(int id)
+        public async Task DeleteReservationAsync(int id)
         {
-            if (!await _reservationRepository.IsReservationExist(id))
+            if (!await _reservationRepository.IsReservationExistAsync(id))
             {
                 throw new NotValidException("Reservation does not exist");
             }
 
-            await _reservationRepository.DeleteReservation(id);
+            await _reservationRepository.DeleteReservationAsync(id);
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByClientid(int clientid, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByClientidAsync(int clientid, int pageSize, int pageNumber)
         {
-            return await _reservationRepository.GetReservationsByClientid(clientid, pageSize, pageNumber);
+            return await _reservationRepository.GetReservationsByClientidAsync(clientid, pageSize, pageNumber);
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByRoomId(int roomId, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByRoomIdAsync(int roomId, int pageSize, int pageNumber)
         {
-            return await _reservationRepository.GetReservationsByRoomId(roomId, pageSize, pageNumber);
+            return await _reservationRepository.GetReservationsByRoomIdAsync(roomId, pageSize, pageNumber);
         }
 
-        public async Task<List<ReservationDto>> GetReservationsByDate(string startDate, string? endDate, int pageSize, int pageNumber)
+        public async Task<List<ReservationDto>> GetReservationsByDateAsync(string startDate, string? endDate, int pageSize, int pageNumber)
         {
 
             var ReservationStart = DateTime.Parse(startDate).AddHours(12);
@@ -101,22 +101,22 @@ namespace Hotel.Application.Services
             {
                 throw new NotValidException("Invalid date");
             }
-            return await _reservationRepository.GetReservationsByDate(ReservationStart, ReservationEnd, pageSize, pageNumber);
+            return await _reservationRepository.GetReservationsByDateAsync(ReservationStart, ReservationEnd, pageSize, pageNumber);
         }
 
-        public async Task UpdateReservation(int reservationId, ReservationDto reservationDto)
+        public async Task UpdateReservationAsync(int reservationId, ReservationDto reservationDto)
         {
-            if (!await _clientRepository.IsClientExist(reservationDto.ClientId))
+            if (!await _clientRepository.IsClientExistAsync(reservationDto.ClientId))
             {
                 throw new NotValidException("Client does not exist");
             }
 
-            if (!await _roomRepository.IsRoomExist(reservationDto.RoomId))
+            if (!await _roomRepository.IsRoomExistAsync(reservationDto.RoomId))
             {
                 throw new NotValidException("Room does not exist");
             }
 
-            if (reservationDto.MethodOfPaymentId is not null && !await _methodOfPayment.IsMethodOfPaymentsExistById(reservationDto.MethodOfPaymentId.Value))
+            if (reservationDto.MethodOfPaymentId is not null && !await _methodOfPayment.IsMethodOfPaymentsExistByIdAsync(reservationDto.MethodOfPaymentId.Value))
             {
                 throw new NotValidException("Method of payment does not exist");
             }
@@ -127,23 +127,23 @@ namespace Hotel.Application.Services
                 throw new NotValidException("Invalid date");
             }
 
-            if (await _roomRepository.IsRoomReserved(reservationDto.RoomId, reservationDto.ReservationStart,
+            if (await _roomRepository.IsRoomReservedAsync(reservationDto.RoomId, reservationDto.ReservationStart,
                     reservationDto.ReservationEnd))
             {
                 throw new NotValidException("The room is unavailable");
             }
 
-            await _reservationRepository.UpdateReservation(reservationDto);
+            await _reservationRepository.UpdateReservationAsync(reservationDto);
         }
 
-        public async Task ConfirmReservation(int reservationId)
+        public async Task ConfirmReservationAsync(int reservationId)
         {
-            await _reservationRepository.ConfirmReservation(reservationId);
+            await _reservationRepository.ConfirmReservationAsync(reservationId);
         }
 
-        public async Task CancelReservation(int reservationId)
+        public async Task CancelReservationAsync(int reservationId)
         {
-            await _reservationRepository.CancelReservation(reservationId);
+            await _reservationRepository.CancelReservationAsync(reservationId);
         }
     }
 }

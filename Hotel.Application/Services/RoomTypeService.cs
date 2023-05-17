@@ -19,14 +19,14 @@ namespace Hotel.Application.Services
         {
             _roomTypeRepository = roomTypeRepository;
         }
-        public async Task<List<RoomTypeDto>> GetRoomTypes()
+        public async Task<List<RoomTypeDto>> GetRoomTypesAsync()
         {
-            return await _roomTypeRepository.GetRoomTypes();
+            return await _roomTypeRepository.GetRoomTypesAsync();
         }
 
-        public async Task<RoomTypeDto> GetRoomTypeById(int id)
+        public async Task<RoomTypeDto> GetRoomTypeByIdAsync(int id)
         {
-            var roomType = await _roomTypeRepository.GetRoomTypeById(id);
+            var roomType = await _roomTypeRepository.GetRoomTypeByIdAsync(id);
 
             if (roomType == null)
             {
@@ -36,49 +36,49 @@ namespace Hotel.Application.Services
             return roomType;
         }
 
-        public async Task<int> CreateRoomType(RoomTypeDto dto)
+        public async Task<int> CreateRoomTypeAsync(RoomTypeDto dto)
         {
 
             if (!string.IsNullOrWhiteSpace(dto.Type) && !string.IsNullOrWhiteSpace(dto.Standard))
             {
-                return await _roomTypeRepository.CreateRoomType(dto);
+                return await _roomTypeRepository.CreateRoomTypeAsync(dto);
             }
             throw new NotValidException("All fields must be completed");
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExist(id);
+            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExistAsync(id);
 
             if (isRoomTypeExist)
             {
-                await _roomTypeRepository.Delete(id);
+                await _roomTypeRepository.DeleteAsync(id);
                 return;
             }
 
             throw new NotValidException($"Room Type with Id {id} does not exist");
         }
 
-        public async Task ChangeActiveOfRoomType(int id)
+        public async Task ChangeActiveOfRoomTypeAsync(int id)
         {
-            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExist(id);
+            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExistAsync(id);
 
             if (isRoomTypeExist)
             {
-                await _roomTypeRepository.ChangeActiveOfRoomType(id);
+                await _roomTypeRepository.ChangeActiveOfRoomTypeAsync(id);
                 return;
             }
 
             throw new NotValidException($"Room Type with Id {id} does not exist");
         }
 
-        public async Task Update(RoomTypeDto dto)
+        public async Task UpdateAsync(RoomTypeDto dto)
         {
-            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExist(dto.Id);
+            var isRoomTypeExist = await _roomTypeRepository.IsRoomTypeExistAsync(dto.Id);
 
             if (isRoomTypeExist && !string.IsNullOrWhiteSpace(dto.Type) && !string.IsNullOrWhiteSpace(dto.Standard))
             {
-                await _roomTypeRepository.Update(dto);
+                await _roomTypeRepository.UpdateAsync(dto);
                 return;
             }
 
